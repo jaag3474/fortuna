@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 <template>
   <div :class="['p-4','text-blue', fondo]">
@@ -15,6 +15,7 @@ import axios from 'axios';
         <span v-if="Model.cantidad === 0">- Sin Stock</span>
       </li>
     </ul>
+
     <h4>TOTAL : {{sumarModels}}</h4>
     <div class="progress">
       <div
@@ -31,26 +32,87 @@ import axios from 'axios';
     <div id="index">
       <Lista></Lista>
     </div>
+
+
+<cart></cart>
+ <v-app>
+ <div>
+  
+<v-row align="center">
+    <v-col class="text-center" cols="12" sm="4">
+      <div class="my-2">
+        <v-btn text small>Normal</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text small color="primary">Primary</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text small color="error">Error</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text small disabled>Disabled</v-btn>
+      </div>
+    </v-col>
+
+    <v-col class="text-center" cols="12" sm="4">
+      <div class="my-2">
+        <v-btn text>Normal</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text color="primary">Primary</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text color="error">Error</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text disabled>Disabled</v-btn>
+      </div>
+    </v-col>
+
+    <v-col class="text-center" cols="12" sm="4">
+      <div class="my-2">
+        <v-btn text large>Normal</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text large color="primary">Primary</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text large color="error">Error</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text large disabled>Disabled</v-btn>
+      </div>
+    </v-col>
+  </v-row>
   </div>
+ </v-app>
+  </div>
+  
 </template>
 
 <script>
-import VueCompositionApi from "@vue/composition-api";
+import axios from 'axios';
 import Lista from "../../components/Lista";
 import Vue from "vue";
 import { db } from "@/plugins/firebase.js";
+import cart from "@/components/cart";
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
+import vuetify from 'vuetify'
+
 Vue.config.productionTip = false;
 export default {
  /* fetch({ store }) {
     return db
-      .collection("Nuxt-pruebas")
+      .collection("prueba")
       .get()
       .then(query => {
-        const pruebas = [];
+        const prueba = [];
         query.forEach(element => {
           pruebas.push(element.data());
         });
-        store.commit("setTareas", Nuxt-pruebas);
+        store.commit("setTareas", prueba);
       })
       .catch(function(error) {
         console.log("error getting documents: ", error);
@@ -58,7 +120,7 @@ export default {
   },*/
   name: "index",
   components: {
-    Lista
+    Lista, cart
   },
 
   data() {
@@ -102,7 +164,24 @@ export default {
         "bg-danger": this.sumarModels >= 50
       };
     }
-  }
+  },
+   asyncData({ req, redirect }) {
+    if (process.server) {
+      // console.log('server', req.headers)
+      const user = getUserFromCookie(req)
+         console.log('b', getUserFromCookie(req))
+      if (!user) {
+        console.log('redirecting server')
+        redirect('/Ingreso')
+      }
+    } else {
+      var user = firebase.auth().currentUser
+      if (!user) {
+        redirect('/Ingreso')
+      }
+         console.log($nuxt.$router)
+    }
+  },
 };
 </script>
 

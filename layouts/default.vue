@@ -1,26 +1,33 @@
 <template>
 <div>
+ 
 <Navigation/>
+
   <div class="content">
     <nuxt />
 
   </div>
+  <Footer/>
   </div>
 </template>
 <script>
 
 import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
+
 
 export default {
   components:{
-    Navigation
+    Navigation, Footer
+   
     }
 }
 
 </script>
 <style>
 * {
-  box-sizing: border-box;
+  padding: 3px;
+  box-sizing:border-box;
   color: whitesmoke;
 }
 

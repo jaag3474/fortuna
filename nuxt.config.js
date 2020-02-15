@@ -1,3 +1,5 @@
+import colors from 'vuetify/es5/util/colors'
+
 
 export default {
   mode: 'universal',
@@ -14,10 +16,17 @@ export default {
     link: [
       {
         rel: 'icon', type: 'image/x-icon', href: '/favicon.ico',
-        rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Bangers&display=swap"
+        rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Bangers&display=swap",
+        rel: 'stylesheet', href: "https://use.fontawesome.com/releases/v5.8.1/css/all.css",
+        rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Quicksand",
+        rel: 'stylesheet', href: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css",
+        rel: 'stylesheet', href: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css",
+        rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Open+Sans&display=swap",
+        rel: "stylesheet", href: "vue-typed-js/dist/vue-typed-js.css"
       }
     ]
   },
+  router: { middleware: 'games' },
   /*
   ** Customize the progress-bar color
   */
@@ -26,7 +35,13 @@ export default {
   ** Global CSS
   */
   css: [
-    '@assets/css/main.css'
+    '@assets/css/main.css',
+    '@assets/css/registro.css',
+    '@assets/css/login.css',
+    '~/assets/style/app.styl',
+    '@/assets/css/styles.css'
+
+    //  '@/assets/css/style/app.styl'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -37,8 +52,9 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'
   ],
+
   /*
   ** Nuxt.js modules
   */
@@ -49,6 +65,25 @@ export default {
     '@nuxtjs/axios'
 
   ],
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          primary: colors.blue.darken2,
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        }
+      }
+    }
+  },
+  axios: {
+  },
   /*
   ** Build configuration
   */

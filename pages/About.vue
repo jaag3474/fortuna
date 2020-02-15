@@ -6,6 +6,11 @@
 </template>
 
 <script>
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
+
+
 export default {
   head() {
     return {
@@ -18,7 +23,24 @@ export default {
         }
       ]
     };
-  }
+  },
+   asyncData({ req, redirect }) {
+    if (process.server) {
+      // console.log('server', req.headers)
+      const user = getUserFromCookie(req)
+         console.log('b', getUserFromCookie(req))
+      if (!user) {
+        console.log('redirecting server')
+        redirect('/Ingreso')
+      }
+    } else {
+      var user = firebase.auth().currentUser
+      if (!user) {
+        redirect('/Ingreso')
+      }
+         console.log($nuxt.$router)
+    }
+  },
 };
 </script>
 
